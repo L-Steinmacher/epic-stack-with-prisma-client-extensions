@@ -15,8 +15,7 @@ Below is a brief list of what I did to get the enum working in the app. Further 
 
 * In our prisma database server [db.server.ts](app/utils/db.server.ts) we added the `.$extension()` to our Prisma Client then pass in our
 
-
-   In the model directory there is [notes.ts](app/models/note.ts) which is where we set up the zod schema for the notes and declare the types that we will use for the enum.
+* In the model directory there is [notes.ts](app/models/note.ts) which is where we set up the zod schema for the notes and declare the types that we will use for the enum.
 
 
 * Lastly in [seed.ts](prisma/seed.ts) we abstracted out the notes into variable objects and type cast them as type `Note` that we declared in our models. Now we have enum like type safety in from Typescript as well as validation from Zod.
@@ -27,10 +26,8 @@ Once again this project uses The Epic Stack. For more information [visit the sit
 
 ## Conclusion
 
-This documentation has outlined the implementation of enum-like validation in the application using "The Epic Stack," an opinionated project starter and reference implementation for web development. By incorporating Zod validation with Typescript magic, the application achieves type safety and validation for enum-like behavior, overcoming the limitations of Prisma's lack of native support for enums.
+This documentation has outlined the implementation of enum-like validation in the application using The Epic Stack, an opinionated project starter and reference implementation for web development. By incorporating Zod validation with Typescript magic, the application achieves type safety and validation for enum-like behavior, overcoming the limitations of Prisma's lack of native support for enums.
 
-The changes made in the application are summarized, highlighting the activation of Prisma Client extensions, the addition of the previewFeatures and priority field in the Note model, and the setup of the Zod schema for the notes. Furthermore, the abstraction of note objects and their type casting as the Note type in the seed file completes the integration of enum-like type safety from Typescript and validation from Zod.
-
-"The Epic Stack" serves as the foundation for this project, offering a stable framework and technology choices that accelerate development and provide a solid foundation for web applications. Further information about "The Epic Stack" and how to contribute to it is provided for those interested.
+The changes made in the application are summarized, highlighting the activation of Prisma Client extensions, the addition of the previewFeatures and priority field in the Note model, and the setup of the Zod schema for the notes. The abstraction of note objects and their type casting as the Note type in the seed file completes the integration of enum-like type safety from Typescript and validation from Zod.
 
 Thank you for reviewing this documentation, and remember, you rock! 🪨
