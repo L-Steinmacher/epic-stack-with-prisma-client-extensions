@@ -3,6 +3,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Added previewFeature to the client
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["clientExtensions"]

@@ -1,48 +1,36 @@
-<div align="center">
-  <h1 align="center"><a href="https://www.epicweb.dev/epic-stack">The Epic Stack 🚀</a></h1>
-  <strong align="center">
-    Ditch analysis paralysis and start shipping Epic Web apps.
-  </strong>
-  <p>
-    This is an opinionated project starter and reference that allows teams to
-    ship their ideas to production faster and on a more stable foundation based
-    on the experience of <a href="https://kentcdodds.com">Kent C. Dodds</a> and
-    <a href="https://github.com/epicweb-dev/epic-stack/graphs/contributors">contributors</a>.
-  </p>
-</div>
+# Enum Validation
 
-```sh
-npx create-remix@latest --typescript --install --template epicweb-dev/epic-stack
+This application is uses [The Epic Stack](https://github.com/epicweb-dev/epic-stack) which is an opinionated project starter and reference implementation for web development, providing solid technology choices and configurations to help teams overcome analysis paralysis and ship their ideas faster with a stable foundation. This toy app, which uses Zod validation with some Typescript magic for [enum like validation](https://youtu.be/jjMbPt_H3RQ?t=312) to use with Prisma (which does not support enums) for type safety and validation. We will be declaring a POJO (Plain Old Javascript Object) and type casting it with some Typescript Magic. Some of the pitfalls of Typescript enums are outlined in the video linked above.
+
+## What changed?
+
+> A quick note that if you are setting up Prisma Client extensions on your project for the first time all you need to do is add the `previewFeatures` to the client generation command below. [Here is a link](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions) to the official Prisma documentation for more information on Prisma Client extensions.
+```bash
+npx prisma generate
 ```
+Below is a brief list of what I did to get the enum working in the app. Further documentation on what/why the changes are made are on the links provided below.
 
-[![The Epic Stack](https://github.com/epicweb-dev/epic-stack/assets/1500684/345a3947-54ad-481d-888a-dbc1d1f313c1)](https://www.epicweb.dev/epic-stack)
+* Well for starters Prisma Client extensions are activated in this application which if you head to [schema.prisma](prisma/schema.prisma) you'll see that the `previewFeatures` has been added to the client generation and the Note model has an additional field of `priority` added.
 
-[The Epic Stack](https://www.epicweb.dev/epic-stack)
 
-<hr />
+* In our prisma database server [db.server.ts](app/utils/db.server.ts) we added the `.$extension()` to our Prisma Client then pass in our
 
-## Watch Kent's Introduction to The Epic Stack
 
-[![screenshot of a YouTube video](https://github.com/epicweb-dev/epic-stack/assets/1500684/6beafa78-41c6-47e1-b999-08d3d3e5cb57)](https://www.youtube.com/watch?v=yMK5SVRASxM)
+   In the model directory there is [notes.ts](app/models/note.ts) which is where we set up the zod schema for the notes and declare the types that we will use for the enum.
 
-["The Epic Stack" by Kent C. Dodds at #RemixConf 2023 💿](https://www.youtube.com/watch?v=yMK5SVRASxM)
 
-## Docs
+* Lastly in [seed.ts](prisma/seed.ts) we abstracted out the notes into variable objects and type cast them as type `Note` that we declared in our models. Now we have enum like type safety in from Typescript as well as validation from Zod.
 
-[Read the docs](https://github.com/epicweb-dev/epic-stack/blob/main/docs)
-(please 🙏).
+## The Epic Stack
 
-## Support
+Once again this project uses The Epic Stack. For more information [visit the site](https://www.epicweb.dev/epic-stack) and if you're interested in contributing to The Epic Stack, check out [here](https://github.com/epicweb-dev/epic-stack/blob/main/CONTRIBUTING.md).
 
-- 🆘 Join the
-  [discussion on GitHub](https://github.com/epicweb-dev/epic-stack/discussions)
-  and the [KCD Community on Discord](https://kcd.im/discord).
-- 💡 Create an
-  [idea discussion](https://github.com/epicweb-dev/epic-stack/discussions/new?category=ideas)
-  for suggestions.
-- 🐛 Open a [GitHub issue](https://github.com/epicweb-dev/epic-stack/issues) to
-  report a bug.
+## Conclusion
 
-## Thanks
+This documentation has outlined the implementation of enum-like validation in the application using "The Epic Stack," an opinionated project starter and reference implementation for web development. By incorporating Zod validation with Typescript magic, the application achieves type safety and validation for enum-like behavior, overcoming the limitations of Prisma's lack of native support for enums.
 
-You rock 🪨
+The changes made in the application are summarized, highlighting the activation of Prisma Client extensions, the addition of the previewFeatures and priority field in the Note model, and the setup of the Zod schema for the notes. Furthermore, the abstraction of note objects and their type casting as the Note type in the seed file completes the integration of enum-like type safety from Typescript and validation from Zod.
+
+"The Epic Stack" serves as the foundation for this project, offering a stable framework and technology choices that accelerate development and provide a solid foundation for web applications. Further information about "The Epic Stack" and how to contribute to it is provided for those interested.
+
+Thank you for reviewing this documentation, and remember, you rock! 🪨
