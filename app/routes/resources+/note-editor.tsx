@@ -2,15 +2,17 @@ import { conform, useForm } from '@conform-to/react'
 import { getFieldsetConstraint, parse } from '@conform-to/zod'
 import { json, redirect, type DataFunctionArgs } from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
+import { PriorityEnum } from 'types/priority.ts'
 import { z } from 'zod'
 import { requireUserId } from '~/utils/auth.server.ts'
 import { prisma } from '~/utils/db.server.ts'
-import { Button, ErrorList, Field, TextareaField } from '~/utils/forms.tsx'
+import { Button, EnumSelect, ErrorList, Field, TextareaField } from '~/utils/forms.tsx'
 
 export const NoteEditorSchema = z.object({
 	id: z.string().optional(),
 	title: z.string().min(1),
 	content: z.string().min(1),
+	priority: z.string().min(1),
 })
 
 export async function action({ request }: DataFunctionArgs) {
@@ -34,12 +36,13 @@ export async function action({ request }: DataFunctionArgs) {
 	}
 	let note: { id: string; owner: { username: string } }
 
-	const { title, content, id } = submission.value
-
+	const { title, content, id, priority  } = submission.value
+	console.log(`priority: ${priority}`)
 	const data = {
 		ownerId: userId,
 		title: title,
 		content: content,
+		priority: priority,
 	}
 
 	const select = {
@@ -78,7 +81,7 @@ export async function action({ request }: DataFunctionArgs) {
 export function NoteEditor({
 	note,
 }: {
-	note?: { id: string; title: string; content: string }
+	note?: { id: string; title: string; content: string; priority: string }
 }) {
 	const noteEditorFetcher = useFetcher<typeof action>()
 
@@ -92,6 +95,7 @@ export function NoteEditor({
 		defaultValue: {
 			title: note?.title,
 			content: note?.content,
+			priority: note?.priority,
 		},
 		shouldRevalidate: 'onBlur',
 	})
@@ -118,6 +122,15 @@ export function NoteEditor({
 					autoComplete: 'content',
 				}}
 				errors={fields.content.errors}
+			/>
+			<EnumSelect
+				enumObject={PriorityEnum}
+				className="custom-class"
+				id="priorityId"
+				name="priority"
+				labelProps={{
+				children: "Choose Priority",
+				}}
 			/>
 			<ErrorList errors={form.errors} id={form.errorId} />
 			<div className="flex justify-end gap-4">

@@ -43,6 +43,7 @@ export async function loader({ params }: DataFunctionArgs) {
 				select: {
 					id: true,
 					title: true,
+					priority: true,
 				},
 			}),
 		{ timings, type: 'find notes' },
