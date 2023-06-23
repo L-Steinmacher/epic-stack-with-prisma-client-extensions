@@ -4,6 +4,7 @@ import { createPassword, createUser } from 'tests/db-utils.ts'
 import { prisma } from '~/utils/db.server.ts'
 import { deleteAllData } from 'tests/setup/utils.ts'
 import { getPasswordHash } from '~/utils/auth.server.ts'
+import { PriorityEnum } from 'types/priority.ts'
 
 async function seed() {
 	console.log('🌱 Seeding...')
@@ -52,10 +53,14 @@ async function seed() {
 					notes: {
 						create: Array.from({
 							length: faker.number.int({ min: 0, max: 10 }),
-						}).map(() => ({
+						}).map(() => {
+							const note = {
 							title: faker.lorem.sentence(),
 							content: faker.lorem.paragraphs(),
-						})),
+							priority: faker.helpers.arrayElement(Object.values(PriorityEnum)),
+							}
+							return note;
+							}),
 					},
 				},
 			})
@@ -67,6 +72,25 @@ async function seed() {
 	console.time(
 		`🐨 Created user "kody" with the password "kodylovesyou" and admin role`,
 	)
+	// Type safety on the priority property as well as intellesense completion. Try changing the priority to an empty string and see the completion!
+	const noteOne = {
+		title:  'Basic Koala Facts',
+		content:'Koalas are found in the eucalyptus forests of eastern Australia. They have grey fur with a cream-coloured chest, and strong, clawed feet, perfect for living in the branches of trees!',
+		priority: "Moderate",
+	}
+	// You can access the PriorityEnum values in dot notation as bellow
+	const noteTwo = {
+		title: 'Koalas like to cuddle',
+		content:
+			'Cuddly critters, koalas measure about 60cm to 85cm long, and weigh about 14kg.',
+		priority: PriorityEnum.MODERATE,
+	}
+	const noteThree = {
+		title: 'Not bears',
+		content:
+			"Although you may have heard people call them koala 'bears', these awesome animals aren’t bears at all – they are in fact marsupials. A group of mammals, most marsupials have pouches where their newborns develop.",
+		priority: 'Important!',
+	}
 	await prisma.user.create({
 		data: {
 			email: 'kody@kcd.dev',
@@ -92,21 +116,9 @@ async function seed() {
 			},
 			notes: {
 				create: [
-					{
-						title: 'Basic Koala Facts',
-						content:
-							'Koalas are found in the eucalyptus forests of eastern Australia. They have grey fur with a cream-coloured chest, and strong, clawed feet, perfect for living in the branches of trees!',
-					},
-					{
-						title: 'Koalas like to cuddle',
-						content:
-							'Cuddly critters, koalas measure about 60cm to 85cm long, and weigh about 14kg.',
-					},
-					{
-						title: 'Not bears',
-						content:
-							"Although you may have heard people call them koala 'bears', these awesome animals aren’t bears at all – they are in fact marsupials. A group of mammals, most marsupials have pouches where their newborns develop.",
-					},
+					noteOne,
+					noteTwo,
+					noteThree,
 				],
 			},
 		},

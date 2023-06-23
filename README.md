@@ -1,3 +1,4 @@
+
 # Setting up Prisma Client extensions for enums in Epic Stack
 ## Why I did this
 Prisma dosn't support enums out of the box and this project shows a way to set up enum like behaviors in your Epic Stack application.
@@ -10,3 +11,4 @@ I also left comments in the code to describe what and why I did to get the enum 
 [Matt Pocock ](https://youtu.be/jjMbPt_H3RQ?t=312) splaining the TypesScrip magic that is taking place.
 
 I hope this helps someone!  Have a great day!
+

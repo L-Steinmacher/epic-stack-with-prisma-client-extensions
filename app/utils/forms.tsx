@@ -1,8 +1,10 @@
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { Link } from '@remix-run/react'
-import React, { useId } from 'react'
+import React, {  useId, useState } from 'react'
 import styles from './forms.module.css'
 import { twMerge } from 'tailwind-merge'
+import { PriorityEnum } from 'types/priority.ts'
+
 
 export type ListOfErrors = Array<string | null | undefined> | null | undefined
 
@@ -238,3 +240,57 @@ export function LabelButton({
 		/>
 	)
 }
+interface EnumSelectProps {
+	enumObject: typeof PriorityEnum;
+	className?: string;
+	id?: string;
+	name?: string;
+	errors?: ListOfErrors;
+	labelProps?: Omit<JSX.IntrinsicElements['label'], 'className'>
+}
+
+export function EnumSelect({
+	enumObject,
+	className,
+	id: propsId,
+	labelProps,
+	name = 'priority',
+	errors,
+	}: EnumSelectProps) {
+	const fallbackId = useId();
+	const id = propsId ?? name ?? fallbackId;
+	const errorId = errors?.length ? `${id}-error` : undefined;
+
+	const [selectedOption, setSelectedOption] = useState<string>(
+	  enumObject[Object.keys(enumObject)[0] as keyof typeof enumObject]
+	);
+
+	function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+	  setSelectedOption(event.target.value);
+	}
+
+	return (
+	  <div className={twMerge(styles.field, className)}>
+		<select
+		  id={id}
+		  value={selectedOption}
+		  onChange={handleChange}
+		  name={name}
+		  aria-invalid={errorId ? true : undefined}
+		  aria-describedby={errorId}
+		  placeholder=" "
+		  className="h-16 w-full rounded-lg border border-night-400 bg-night-700 px-4 pt-4 text-body-xs caret-white outline-none focus:border-accent-purple disabled:bg-night-400"
+		>
+		  {Object.values(enumObject).map((value, index) => (
+			<option className="py-1 px-2" key={index} value={value}>
+			  {value}
+			</option>
+		  ))}
+		</select>
+		{labelProps && <label htmlFor={id} {...labelProps} />}
+		<div className="px-4 pb-3 pt-1">
+		  {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+		</div>
+	  </div>
+	);
+  }
