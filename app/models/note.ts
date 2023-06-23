@@ -1,13 +1,9 @@
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
+import { PriorityEnum } from "types/priority.ts";
 
 // We declare the properties for the "Enum" as a POJO (Plain Old Javascript object) and make it immutable with the as const type decleration.
-export const PriorityEnum = {
-    IMPORTANT: "Important!",
-    MODERATE: "Moderate",
-    LOW: "Low",
-    BACKLOG: "Backlog"
-} as const;
+
 
 /*
 * The type ObjectValues ObjectValues is a type alias that is used to convert the values of an object into a union type.
@@ -19,7 +15,8 @@ type priorityEnum = ObjectValues<typeof PriorityEnum>;
 export type Note = {
     title: string;
     content: string;
-    priority: priorityEnum;
+    ownerId: string;
+    priority:  priorityEnum;
 }
 
 /*
