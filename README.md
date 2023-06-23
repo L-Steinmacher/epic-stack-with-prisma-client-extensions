@@ -1,48 +1,12 @@
-<div align="center">
-  <h1 align="center"><a href="https://www.epicweb.dev/epic-stack">The Epic Stack 🚀</a></h1>
-  <strong align="center">
-    Ditch analysis paralysis and start shipping Epic Web apps.
-  </strong>
-  <p>
-    This is an opinionated project starter and reference that allows teams to
-    ship their ideas to production faster and on a more stable foundation based
-    on the experience of <a href="https://kentcdodds.com">Kent C. Dodds</a> and
-    <a href="https://github.com/epicweb-dev/epic-stack/graphs/contributors">contributors</a>.
-  </p>
-</div>
+# Setting up Prisma Client extensions for enums in Epic Stack
+## Why I did this
+Prisma dosn't support enums out of the box and this project shows a way to set up enum like behaviors in your Epic Stack application.
+[Video of what I did](https://www.loom.com/share/7a8d9619085e4afd88bab9e3c33a56aa?sid=18c6a548-192a-4792-86fe-b46b5455ebca). 
 
-```sh
-npx create-remix@latest --typescript --install --template epicweb-dev/epic-stack
-```
+I also left comments in the code to describe what and why I did to get the enum to work in the project. 
 
-[![The Epic Stack](https://github.com/epicweb-dev/epic-stack/assets/1500684/345a3947-54ad-481d-888a-dbc1d1f313c1)](https://www.epicweb.dev/epic-stack)
+[Prisma Docs](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions) to learn more on client extensions in your project.
 
-[The Epic Stack](https://www.epicweb.dev/epic-stack)
+[Matt Pocock ](https://youtu.be/jjMbPt_H3RQ?t=312) splaining the TypesScrip magic that is taking place.
 
-<hr />
-
-## Watch Kent's Introduction to The Epic Stack
-
-[![screenshot of a YouTube video](https://github.com/epicweb-dev/epic-stack/assets/1500684/6beafa78-41c6-47e1-b999-08d3d3e5cb57)](https://www.youtube.com/watch?v=yMK5SVRASxM)
-
-["The Epic Stack" by Kent C. Dodds at #RemixConf 2023 💿](https://www.youtube.com/watch?v=yMK5SVRASxM)
-
-## Docs
-
-[Read the docs](https://github.com/epicweb-dev/epic-stack/blob/main/docs)
-(please 🙏).
-
-## Support
-
-- 🆘 Join the
-  [discussion on GitHub](https://github.com/epicweb-dev/epic-stack/discussions)
-  and the [KCD Community on Discord](https://kcd.im/discord).
-- 💡 Create an
-  [idea discussion](https://github.com/epicweb-dev/epic-stack/discussions/new?category=ideas)
-  for suggestions.
-- 🐛 Open a [GitHub issue](https://github.com/epicweb-dev/epic-stack/issues) to
-  report a bug.
-
-## Thanks
-
-You rock 🪨
+I hope this helps someone!  Have a great day!
